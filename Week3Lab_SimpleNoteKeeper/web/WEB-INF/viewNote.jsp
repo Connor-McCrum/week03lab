@@ -21,9 +21,11 @@
         
         <br>
         <h2>View Note</h2>
-        <b>Title:</b><jsp:getProperty name="notes" property="title"></jsp:getProperty>
+        <b>Title:</b>${notes.title}
+        
+        
         <br>
-        <b>Contents:</b><jsp:getProperty name="notes" property="notes"></jsp:getProperty>
+        <b>Contents:</b>${notes.notes}
         <br>
         <a href="note?edit=true"> edit</a>
     </body>

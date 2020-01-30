@@ -7,6 +7,7 @@ package servlets;
 
 import ca.sait.itsd.Note;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -51,10 +52,13 @@ public class NoteServlet extends HttpServlet {
             throws ServletException, IOException {
         String edit = request.getParameter("edit");
         Note note = new Note();
-        File input = new File("C:\\Users\\Administrator\\Documents\\NetBeansProjects\\week03lab\\Week3Lab_SimpleNoteKeeper\\web\\WEB-INF\\note.txt" );
+        File input = new File(getServletContext().getRealPath("/WEB-INF/note.txt"));
         Scanner inputScanner = new Scanner( input );
+        
         note.setTitle(inputScanner.nextLine());
         note.setNotes(inputScanner.nextLine());
+        inputScanner.close();
+        
         
         request.setAttribute("notes", note);
         if(edit==null){
@@ -77,7 +81,20 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Note note = new Note();
+        note.setTitle(request.getParameter("title"));
+        note.setNotes(request.getParameter("contents"));
+        
+        FileWriter fw = 
+                new FileWriter(getServletContext().getRealPath("/WEB-INF/note.txt"));
+        PrintWriter pw = new PrintWriter(fw);
+        pw.println(note.getTitle());
+        pw.println(note.getNotes());
+        pw.close();
+        request.setAttribute("notes", note);
+        request.getRequestDispatcher("/WEB-INF/viewNote.jsp").forward(request, response);
+        
+        
     }
 
     /**

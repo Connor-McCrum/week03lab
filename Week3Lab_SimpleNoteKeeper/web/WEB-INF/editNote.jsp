@@ -13,6 +13,16 @@
     </head>
     <body>
         <jsp:useBean id="notes" class="ca.sait.itsd.Note" scope="session" type="ca.sait.itsd.Note"/>
-        <h1>Hello World!</h1>
+        <h1>Simple Note keeper</h1>
+        <h2>Edit Note</h2>
+        <form action="note" method="POST">
+            Title:<input type="text" name="title" value="${notes.title}">
+            <br>
+            Contents:<textarea rows="4" cols="50" name="contents">${notes.notes}
+                
+            </textarea>
+            <br>
+            <input type="submit" value="save">
+        </form>
     </body>
 </html>
